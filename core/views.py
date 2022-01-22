@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from django.views.generic import ListView, CreateView, UpdateView, DetailView
+from django.views.generic import ListView, CreateView, UpdateView, DeleteView
 from . models import Book
 from . forms import BookForm
 
@@ -10,5 +10,22 @@ def home(request):
 class CreateBook(CreateView):
     model = Book
     template_name = 'core/create-book.html'
-    success_url = 'home'
+    success_url = '/'
     form_class = BookForm
+
+
+class AllBoks(ListView):
+    model = Book
+    template_name = 'core/all-books.html'
+
+
+class DeleteBook(DeleteView):
+    model = Book
+    success_url = '/'
+    template_name = 'core/book-delete.html'
+
+
+class UpdateBook(UpdateView):
+    model = Book
+    tem
+    success_url = '/all-books'
