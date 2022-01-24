@@ -2,6 +2,12 @@ from django.shortcuts import render
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView
 from . models import Book
 from . forms import BookForm
+from django.db.models import Q
+from rest_framework.views import APIView
+from . serializers import BookSerializer
+from rest_framework.response import Response
+from rest_framework import status
+
 
 def home(request):
     return render(request, 'core/index.html')
@@ -27,5 +33,57 @@ class DeleteBook(DeleteView):
 
 class UpdateBook(UpdateView):
     model = Book
-    tem
-    success_url = '/all-books'
+    template_name = 'core/book-update.html'
+    success_url = '/'
+    fields = '__all__'
+
+
+class SearchBook(ListView):
+    model = Book
+    template_name = 'core/search-book.html'
+
+    def get_queryset(self):
+        title = self.request.GET.get('title')
+        author = self.request.GET.get('author')
+        language = self.request.GET.get('language')
+        datest = self.request.GET.get('datest')
+        datend = self.request.GET.get('datend')
+        if datest == "" or datend == "":
+            datest = '1000-01-01'
+            datend = '3000-01-01'
+            object_list = Book.objects.filter(
+                Q(title__icontains=title) & Q(autor__icontains=author) &
+                Q(language__icontains=language) & Q(date_publish__range=(datest, datend)))
+            return object_list
+        else:
+            object_list = Book.objects.filter(
+                Q(title__icontains=title) & Q(autor__icontains=author) &
+                Q(language__icontains=language) & Q(date_publish__range=(datest, datend)))
+            return object_list
+
+
+class SearchBooksAPI(APIView):
+    def get(self, request):
+        title = self.request.GET.get('title')
+        author = self.request.GET.get('author')
+        language = self.request.GET.get('language')
+        datest = self.request.GET.get('datest')
+        datend = self.request.GET.get('datend')
+        if datest == "" or datend == "":
+            datest = '1000-01-01'
+            datend = '3000-01-01'
+            object_list = Book.objects.filter(
+                Q(title__icontains=title) & Q(autor__icontains=author) &
+                Q(language__icontains=language) & Q(date_publish__range=(datest, datend)))
+            serializer = BookSerializer(object_list, many=True)
+            if serializer:
+                return Response(serializer.data, status=status.HTTP_200_OK)
+            return Response(serializer.data, status=status.HTTP_204_NO_CONTENT)
+        else:
+            object_list = Book.objects.filter(
+                Q(title__icontains=title) & Q(autor__icontains=author) &
+                Q(language__icontains=language) & Q(date_publish__range=(datest, datend)))
+            serializer = BookSerializer(object_list, many=True)
+            if serializer:
+                return Response(serializer.data, status=status.HTTP_200_OK)
+            return Response(serializer.data, status=status.HTTP_204_NO_CONTENT)

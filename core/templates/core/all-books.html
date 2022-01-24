@@ -1,5 +1,45 @@
 {% extends 'core/base.html'%}
 {% block content %}
+<div class="float-container" style="padding: 20px;">
+    <div style="width: 50%;
+    float: left;
+    padding: 20px;">
+<h2>Search normal view </h2>
+    <form action="{% url 'search-book' %}" method="get">
+          <input name="title" type="text" placeholder="Title..." style="width:100%;">
+          <input name="author" type="text" placeholder="Author...">
+          <input name="language" type="text" placeholder="Language...">
+          <table>
+                <tr>
+                    <td><input type="date" class="datepicker" name="datest"> </td>
+                    <td style="width:5%"> between </td>
+                    <td><input type="date"  class="datepicker" name="datend"></td>
+                    <br>
+                    <td><input type="submit" value="Search"></td>
+                </tr>
+          </table>
+    </form>
+</div>
+<div style="width: 50%;
+    float: left;
+    padding: 20px;">
+<h2>Search API view </h2>
+    <form action="{% url 'search-book-api' %}" method="get">
+          <input name="title" type="text" placeholder="Title..." style="width:100%;">
+          <input name="author" type="text" placeholder="Author...">
+          <input name="language" type="text" placeholder="Language...">
+          <table>
+                <tr>
+                    <td><input type="date" class="datepicker" name="datest"> </td>
+                    <td style="width:5%"> between </td>
+                    <td><input type="date"  class="datepicker" name="datend"></td>
+                    <br>
+                    <td><input type="submit" value="Search"></td>
+                </tr>
+          </table>
+    </form>
+</div>
+</div>
     <div class="mb-2 text-end mt-5">
         <a class="btn btn-primary" href="{% url 'create-book' %}">
             Add new book
