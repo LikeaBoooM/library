@@ -3,10 +3,10 @@ from django.db import models
 
 
 class Book(models.Model):
-    title = models.CharField(max_length=100, unique=True)
+    title = models.CharField(max_length=100)
     autor = models.CharField(max_length=100)
     date_publish = models.DateField(blank=True, null=True)
-    ISBN_number = models.IntegerField(unique=True)
+    ISBN_number = models.CharField(max_length=100)
     counts_page = models.IntegerField()
     link_poster = models.CharField(max_length=1000)
     language = models.CharField(max_length=100)

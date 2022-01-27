@@ -7,7 +7,7 @@ from rest_framework.views import APIView
 from . serializers import BookSerializer
 from rest_framework.response import Response
 from rest_framework import status
-
+from . getData import getdata
 
 def home(request):
     return render(request, 'core/index.html')
@@ -65,6 +65,7 @@ class SearchBook(ListView):
 class SearchBooksAPI(APIView):
     def get(self, request):
         title = self.request.GET.get('title')
+        getdata(title)
         author = self.request.GET.get('author')
         language = self.request.GET.get('language')
         datest = self.request.GET.get('datest')
