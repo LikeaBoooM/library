@@ -65,7 +65,6 @@ class SearchBook(ListView):
 class SearchBooksAPI(APIView):
     def get(self, request):
         title = self.request.GET.get('title')
-        getdata(title)
         author = self.request.GET.get('author')
         language = self.request.GET.get('language')
         datest = self.request.GET.get('datest')
@@ -88,3 +87,28 @@ class SearchBooksAPI(APIView):
             if serializer:
                 return Response(serializer.data, status=status.HTTP_200_OK)
             return Response(serializer.data, status=status.HTTP_204_NO_CONTENT)
+
+
+class SearchGoogleAPI(APIView):
+    model = Book
+    template_name = 'core/search-book.html'
+
+    def get(self, request):
+        arguments = []
+        q = self.request.GET.get('q')
+        intitle = self.request.GET.get('intitle')
+        inautor = self.request.GET.get('inauthor')
+        inpublisher = self.request.GET.get('inpublisher')
+        subject = self.request.GET.get('subject')
+        isbn = self.request.GET.get('isbn')
+        lccn = self.request.GET.get('lccn')
+        oclc = self.request.GET.get('oclc')
+
+        arguments.extend((q, intitle, inautor, inpublisher, subject, isbn, lccn, oclc))
+        getdata(arguments)
+        books = Book.objects.all()
+        serializer = BookSerializer(books, many=True)
+        if serializer:
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        return Response(serializer.errors, status=status.HTTP_404_NOT_FOUND)
+

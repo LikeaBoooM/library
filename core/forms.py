@@ -1,5 +1,5 @@
 
-from . models import Book
+from . models import Book, Search
 from django import forms
 
 
@@ -15,5 +15,12 @@ class BookForm(forms.ModelForm):
         widgets = {
             'date_publish': DateInput(),
         }
+
+
+class SearchForm(forms.ModelForm):
+
+    class Meta:
+        model = Search
+        fields = '__all__'
 
 

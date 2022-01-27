@@ -1,5 +1,22 @@
 {% extends 'core/base.html'%}
 {% block content %}
+<h2>Search in google API </h2>
+<div class="float-container" style="padding: 20px;">
+    <div style="width: 50%;
+    padding: 20px;">
+    <form action="{% url 'search-book-google-api' %}" method="get">
+          <input name="q" type="text" placeholder="Q...">
+          <input name="intitle" type="text" placeholder="Intitle...">
+          <input name="inauthor" type="text" placeholder="Inauthor...">
+          <input name="inpublisher" type="text" placeholder="Inpublisher...">
+          <input name="subject" type="text" placeholder="Subject...">
+          <input name="isbn" type="text" placeholder="ISBN...">
+          <input name="lccn" type="text" placeholder="LCCN...">
+          <input name="oclc" type="text" placeholder="OCLC...">
+          <button type="submit" class="btn btn-primary">Search</button>
+    </form>
+    </div>
+</div>
 <div class="float-container" style="padding: 20px;">
     <div style="width: 50%;
     float: left;
@@ -15,7 +32,7 @@
                     <td style="width:5%"> between </td>
                     <td><input type="date"  class="datepicker" name="datend"></td>
                     <br>
-                    <td><input type="submit" value="Search"></td>
+                    <td><button type="submit" class="btn btn-primary">Search</button></td>
                 </tr>
           </table>
     </form>
@@ -34,7 +51,7 @@
                     <td style="width:5%"> between </td>
                     <td><input type="date"  class="datepicker" name="datend"></td>
                     <br>
-                    <td><input type="submit" value="Search"></td>
+                    <td><button type="submit" class="btn btn-primary">Search</button></td>
                 </tr>
           </table>
     </form>

@@ -1,7 +1,7 @@
 
 from django.urls import path
 from . import views
-from . views import CreateBook, AllBoks, DeleteBook, UpdateBook, SearchBook, SearchBooksAPI
+from . views import CreateBook, AllBoks, DeleteBook, UpdateBook, SearchBook, SearchBooksAPI, SearchGoogleAPI
 
 urlpatterns = [
     path('', AllBoks.as_view(), name='home'),
@@ -10,5 +10,6 @@ urlpatterns = [
     path('update/<int:pk>/', UpdateBook.as_view(), name='update-book'),
     path('search/', SearchBook.as_view(), name='search-book'),
     path('searchAPI/', SearchBooksAPI.as_view(), name='search-book-api'),
+    path('searchAPIGoogle/', SearchGoogleAPI.as_view(), name='search-book-google-api'),
 
 ]
